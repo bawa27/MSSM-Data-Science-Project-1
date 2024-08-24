@@ -1,0 +1,87 @@
+---
+title: 'Data Science Project #1'
+author: "Aryan Bawa"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include = FALSE}
+setwd("C:/Users/bawaa/OneDrive/Documents/School/Data Science/NASA Kepler Exoplanet Search Results")
+rawDf <- read.csv(file = "cumulative.csv", 
+                  header = TRUE, 
+                  sep = ",", 
+                  dec = ".")
+```
+
+# Problem #1
+
+|   Variable   |   Mean   | Median |  Variance  | Standard Dev |
+|:------------:|:--------:|:------:|:----------:|:------------:|
+| Trans. Depth | 22889.41 |  390   | 6527858772 |   80795.17   |
+| Trans. Dur.  | 5.621606 | 3.7926 |  41.88101  |   6.471554   |
+
+```{r include = TRUE, echo=FALSE}
+#Setting all NA values in the dataframe to 0
+rawDf[is.na(rawDf)] <- 0
+
+#Transit Depth Analysis
+mean(rawDf$koi_depth)
+median(rawDf$koi_depth)
+var(rawDf$koi_depth)
+sd(rawDf$koi_depth)
+
+#Transit Duration Analysis
+mean(rawDf$koi_duration)
+median(rawDf$koi_duration)
+var(rawDf$koi_duration)
+sd(rawDf$koi_duration)
+```
+
+# Problem #2
+
+##Bar plot and histogram for Transit Depth
+
+```{r rawDf$koi_depth, echo=FALSE}
+barplot(rawDf$koi_depth,
+        main="Transit Depth(ppm)",
+        xlab = "Planet Count",
+        ylab = "Depths",
+        col="darkred")
+
+hist(rawDf$koi_depth,
+     main="Frequency of Transit Depth(ppm)",
+     col="darkmagenta",
+     xlab="Depth",
+     xlim = c(0,650000),
+     breaks = 30)
+```
+
+##Bar plot and histogram for Transit Duration
+
+```{r rawDf$koi_duration, echo = FALSE}
+barplot(rawDf$koi_duration,
+        main="Transit Duration",
+        xlab = "Planet Count",
+        ylab = "Durations",
+        col="darkred")
+
+hist(rawDf$koi_duration,
+     main="Frequency of Transit Duration(hours)",
+     col="darkmagenta",
+     xlab="Depth",
+     xlim = c(0,75),
+     breaks = 30)
+```
+
+##Combined Scatter plot of Transit Duration and Depth
+
+```{r rawDf$koi_depth, rawDf$koi_duration, echo=FALSE}
+plot(x = rawDf$koi_depth, y = rawDf$koi_duration,
+     main = "Transit Depth vs Transit Duratuion",
+     xlab = "Depth(ppm)",
+     ylab = "Duration(hours)")
+```
